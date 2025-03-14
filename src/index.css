@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  font-family: "Bad Script", cursive;
+  background-color: #ffffff;
+}
+html.dark body {
+  background-color: #1e1e1e;
+}
