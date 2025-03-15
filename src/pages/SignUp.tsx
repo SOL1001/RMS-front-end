@@ -10,7 +10,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const role = "admin";
     // Basic validation
     if (!username || !email || !password) {
       setError("Please fill in all fields.");
@@ -24,7 +24,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, email, password, role }),
       });
 
       const data = await response.json();

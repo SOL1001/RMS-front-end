@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!email || !password) {
+    if (!username || !password) {
       setError("Please fill in all fields.");
       return;
     }
@@ -23,7 +23,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem("token", data.token);
 
         // Redirect to the profile page
-        navigate("/profile");
+        navigate("/");
       } else {
         setError(data.message || "Login failed. Please try again.");
       }
@@ -57,12 +57,12 @@ const Login = () => {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              User Name
             </label>
             <input
-              type="email"
-              id="email"
-              value={email}
+              type="username"
+              id="username"
+              value={username}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"

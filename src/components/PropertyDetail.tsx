@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -52,6 +52,7 @@ const PropertyDetail = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   ); // State for full-screen image index
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -95,6 +96,24 @@ const PropertyDetail = () => {
       setSelectedImageIndex((prevIndex) =>
         prevIndex === 0 ? property.images.length - 1 : prevIndex - 1
       );
+    }
+  };
+
+  // Handle Buy/Rent button click
+  const handleBuyRentClick = () => {
+    // Check if the user is logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+      // Redirect to login page if not logged in
+      navigate("/login");
+    } else {
+      // Redirect to Buy/Rent page based on property type
+      if (property?.type === "buy") {
+        navigate(`/buy/${property.id}`);
+      } else {
+        navigate(`/rent/${property.id}`);
+      }
     }
   };
 
@@ -502,6 +521,16 @@ const PropertyDetail = () => {
               ]}
             />
           </div>
+        </div>
+
+        {/* Buy/Rent Button */}
+        <div className="mt-8">
+          <button
+            onClick={handleBuyRentClick}
+            className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+          >
+            {property.type === "buy" ? "Buy Now" : "Rent Now"}
+          </button>
         </div>
       </div>
 
